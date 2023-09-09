@@ -43,6 +43,7 @@ const SearchButton = ({ isTekYon }) => {
         dispatch(sortByCategory(category))
     },[category,dispatch])
 
+    console.log(flights);
 
   return (
     <>
@@ -76,6 +77,7 @@ const SearchButton = ({ isTekYon }) => {
           <div className="flex justify-between items-center">
             <p className="text-3xl">Uçuş Listesi</p>
             <select onChange={(e)=>dispatch(setCategory(e.target.value))} className="p-2 outline-none">
+              <option>Filtreleme</option>
               <option value={"price"}>En Düşük Fiyat</option>
               <option value={"time"}>Uçuş Uzunluğu</option>
             </select>

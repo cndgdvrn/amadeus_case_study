@@ -16,19 +16,30 @@ const filteredAirports = (airportName) => {
     .slice(0, 3);
 };
 
-const filteredFlights = (
-  secilenNereden,
-  secilenNereye,
-  gidisTarihi,
-  donusTarihi
-) => {
-  return flightsData.filter((flight) => {
+const filteredFlights = (secilenNereden, secilenNereye, gidisTarihi,donusTarihi) => {
+  const gidenUcaklar =  flightsData.filter((flight) => {
     return (
       flight.nereden.toLowerCase() == secilenNereden.toLowerCase() &&
       flight.nereye.toLowerCase() == secilenNereye.toLowerCase() &&
       flight.gidisTarihi == gidisTarihi
     );
   });
+
+  const donenUcaklar = flightsData.filter((flight) => {
+    return (
+      flight.nereden.toLowerCase() == secilenNereye.toLowerCase() &&
+      flight.nereye.toLowerCase() == secilenNereden.toLowerCase() &&
+      flight.gidisTarihi == donusTarihi
+    );
+  })
+
+    if(donusTarihi){
+      return [...gidenUcaklar,...donenUcaklar]
+    }
+    else{
+      return gidenUcaklar
+    }
+
 };
 
 export const handlers = [
