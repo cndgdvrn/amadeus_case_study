@@ -33,7 +33,6 @@ const filteredFlights = (
 
 export const handlers = [
   rest.get("/flight-icon.svg", (req, res, ctx) => {
-    // İstek yanıtını burada tanımlayın
     return res(ctx.status(200), ctx.text("title svg..."));
   }),
 
