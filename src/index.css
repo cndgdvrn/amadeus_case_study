@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.datepicker input {
+  background: white !important;
+  color: black;
+  outline: none;
+}
+
+.datepicker div,button{
+  background-color: rgb(217, 217, 217);
+  color: black !important;
+}
