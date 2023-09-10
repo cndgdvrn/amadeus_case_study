@@ -20,7 +20,6 @@ import Airport from "./Airport";
 import NereyeAirport from "./NereyeAirport";
 import SearchButton from "./SearchButton";
 
-
 const SearchForm = () => {
   const dispatch = useDispatch();
   const {
@@ -82,12 +81,19 @@ const SearchForm = () => {
     }
   };
 
-
   return (
     <div className="w-full bg-gray-100 p-4 font-gemunu">
-      <p className="w-max border-b-2 border-b-gray-400 text-6xl mb-4 tracking-wider py-1">
-        Fly Search App
-      </p>
+      <div className="flex justify-between">
+        <p className="w-max border-b-2 border-b-gray-400 text-6xl mb-4 tracking-wider py-1">
+          Fly Search App
+        </p>
+        <div className="font-mono font-[900]">
+          <p>Örnek Uçuşlar</p>
+          <p>ESB to ADA 15 Eylül / ADA to ESB 16 Eylül</p>
+          <p>ESB to SAW 15 Eylül / SAW to ESB 20 Eylül</p>
+          <p></p>
+        </div>
+      </div>
 
       <form className="flex flex-col gap-y-2">
         {/* NEREDEN NEREYE START */}
@@ -96,7 +102,11 @@ const SearchForm = () => {
             <label className="font-light">Nereden</label>
             <div className="relative">
               <input
-                value={ secilenNereden ? secilenNereden?.city + ", " + secilenNereden?.name : nereden}
+                value={
+                  secilenNereden
+                    ? secilenNereden?.city + ", " + secilenNereden?.name
+                    : nereden
+                }
                 onChange={(e) => neredenChange(e)}
                 className=" w-full p-3  text-lg  rounded-md outline-none focus:outline-green-200"
                 type="text"
@@ -129,7 +139,11 @@ const SearchForm = () => {
             <label className="font-light">Nereye</label>
             <div className="relative">
               <input
-                value={secilenNereye ? secilenNereye?.city + ", " + secilenNereye?.name : nereye}
+                value={
+                  secilenNereye
+                    ? secilenNereye?.city + ", " + secilenNereye?.name
+                    : nereye
+                }
                 onChange={(e) => nereyeChange(e)}
                 className=" w-full p-3  text-lg  rounded-md outline-none focus:outline-green-200"
                 type="text"
@@ -190,7 +204,11 @@ const SearchForm = () => {
             <div className="flex justify-between">
               <label className="font-light">Dönüş Tarihi</label>
               <div className="flex items-center gap-x-[2px]">
-                <input className="w-5 h-5 border-none" onChange={(e) => handleTekYon(e)} type="checkbox" />
+                <input
+                  className="w-5 h-5 border-none"
+                  onChange={(e) => handleTekYon(e)}
+                  type="checkbox"
+                />
                 <span className="font-semibold text-lg">Tek Yön</span>
               </div>
             </div>

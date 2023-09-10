@@ -232,7 +232,7 @@ const SearchButton = ({ isTekYon }) => {
                     </p>
                   </div>
 
-                  <div className="text-xl font-semibold">{flight.fiyat} ₺</div>
+                  <div className="text-xl font-semibold my-auto">{flight.fiyat} ₺</div>
                   <div className="my-auto">
                     <button
                       onClick={(e) => e.preventDefault()}
@@ -259,7 +259,7 @@ const SearchButton = ({ isTekYon }) => {
 
 
         {status == "loading" && (
-          <div className="fixed top-0 left-0 w-full h-full bg-inherit flex justify-center items-center">
+          <div className="fixed top-0 left-0 w-full bg-gray-100 opacity-100 h-full bg-inherit flex justify-center items-center">
             <PlaneLoading />
           </div>
         )}

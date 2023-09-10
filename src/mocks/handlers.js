@@ -14,7 +14,7 @@ const filteredAirports = (airportName) => {
         airport.iata.toLowerCase().includes(airportName.toLowerCase())
       );
     })
-    .slice(0, 3);
+    .slice(0, 4);
 };
 
 const filteredFlights = (secilenNereden, secilenNereye, gidisTarihi,donusTarihi) => {
