@@ -82,6 +82,7 @@ const SearchButton = ({ isTekYon }) => {
                 <option>Filtreleme</option>
                 <option value={"price"}>En Düşük Fiyat</option>
                 <option value={"time"}>Uçuş Uzunluğu</option>
+                <option value={"airline"}>Hava Yolu</option>
               </select>
             </div>
             {flights.gidenUcaklar.map((flight, index) => {
