@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getFlights, setCategory, sortByCategory } from "../redux/flightSlice";
 import RightArrow from "./Icons/RightArrow";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PlaneIcon from "./Icons/PlaneIcon";
 import ClockIcon from "./Icons/ClockIcon";
 import { ColorRing } from "react-loader-spinner";
+import { formatDate } from "../helpers/formatDate";
+import { formatTime } from "../helpers/formatTime";
 
 const SearchButton = ({ isTekYon }) => {
   const dispatch = useDispatch();
@@ -32,18 +34,13 @@ const SearchButton = ({ isTekYon }) => {
   };
 
   const condition =
-    (secilenNereye && secilenNereden && gidisTarihi && isTekYon) ||
-    (secilenNereye &&
-      secilenNereden &&
-      gidisTarihi &&
-      donusTarihi &&
-      !isTekYon);
+    (gidisTarihi && isTekYon) || (gidisTarihi && donusTarihi && !isTekYon);
 
-    useEffect(() => {
-        dispatch(sortByCategory(category))
-    },[category,dispatch])
+  useEffect(() => {
+    dispatch(sortByCategory(category));
+  }, [category, dispatch]);
 
-    console.log(flights);
+  console.log(flights);
 
   return (
     <>
@@ -72,62 +69,141 @@ const SearchButton = ({ isTekYon }) => {
         )}
       </button>
 
-      {condition && flights.length > 0 && (
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <p className="text-3xl">Uçuş Listesi</p>
-            <select onChange={(e)=>dispatch(setCategory(e.target.value))} className="p-2 outline-none">
-              <option>Filtreleme</option>
-              <option value={"price"}>En Düşük Fiyat</option>
-              <option value={"time"}>Uçuş Uzunluğu</option>
-            </select>
-          </div>
-          {flights.map((flight) => {
-            return (
-              <div
-                className=" flex justify-between p-2"
-                key={flight.ucus_numarasi}>
-                <div className="flex flex-col gap-y-2">
-                  <p>Ucus numarasi: {flight.ucus_numarasi}</p>
-                  <p>{flight.havayolu}</p>
-                  <div className="flex gap-x-1">
-                    <p>{flight.nereden}</p>
-                    <span>
-                      <RightArrow size={24} />
-                    </span>
-                    <p>{flight.nereye}</p>
+      <div className="flex gap-x-12 mt-8 h-full">
+        {condition && flights.gidenUcaklar.length > 0 && (
+          <div className="space-y-6 w-1/2">
+            <div className="flex justify-between items-center">
+              <p className="text-3xl">
+                Uçuş Listesi - <b>Giden Yolcu</b>
+              </p>
+              <select
+                onChange={(e) => dispatch(setCategory(e.target.value))}
+                className="p-2 outline-none">
+                <option>Filtreleme</option>
+                <option value={"price"}>En Düşük Fiyat</option>
+                <option value={"time"}>Uçuş Uzunluğu</option>
+              </select>
+            </div>
+            {flights.gidenUcaklar.map((flight, index) => {
+              return (
+                <div
+                  className={` flex justify-between p-2 ${
+                    index !== flights.gidenUcaklar.length - 1 &&
+                    "border-b-2 border-gray-200"
+                  }`}
+                  key={flight.ucus_numarasi}>
+                  <div className="flex flex-col gap-y-2">
+                    <p>Ucus numarasi: {flight.ucus_numarasi}</p>
+                    <div>{formatDate(flight.gidisTarihi)}</div>
+                    <p>{flight.havayolu}</p>
+                    <div className="flex gap-x-1">
+                      <p>{flight.nereden}</p>
+                      <span>
+                        <RightArrow size={24} />
+                      </span>
+                      <p>{flight.nereye}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col gap-y-2">
-                  <div className="flex justify-center items-center gap-x-2">
-                    <p>{flight.kalkis_saati}</p>
-                    <PlaneIcon size={24} />
-                    <p>{flight.varis_saati}</p>
+                  <div className="flex flex-col gap-y-2">
+                    <div className="flex justify-center items-center gap-x-2">
+                      <p>{flight.kalkis_saati}</p>
+                      <PlaneIcon size={24} />
+                      <p>{flight.varis_saati}</p>
+                    </div>
+                    <div className="flex items-center gap-x-1">
+                      <span>
+                        <ClockIcon />
+                      </span>
+                      <p>{formatTime(flight.ucus_suresi)}</p>
+                    </div>
+                    <p>
+                      {flight.nereden_sehir} - {flight.nereye_sehir}{" "}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-x-1">
-                    <span>
-                      <ClockIcon />
-                    </span>
-                    <p>{flight.ucus_suresi}</p>
-                  </div>
-                  <p>
-                    {flight.nereden_sehir} - {flight.nereye_sehir}{" "}
-                  </p>
-                </div>
 
-                <div className="text-xl font-semibold">{flight.fiyat} ₺</div>
-                <div className="my-auto">
-                  <button
-                    onClick={(e) => e.preventDefault()}
-                    className="bg-app-green p-3 text-lg rounded-lg !text-white font-semibold">
-                    İncele
-                  </button>
+                  <div className="text-xl font-semibold">{flight.fiyat} ₺</div>
+                  <div className="my-auto">
+                    <button
+                      onClick={(e) => e.preventDefault()}
+                      className="bg-app-green p-3 text-lg rounded-lg !text-white font-semibold">
+                      İncele
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+              );
+            })}
+          </div>
+        )}
+
+        {condition && flights.donenUcaklar?.length > 0 && flights.gidenUcaklar.length > 0 &&  (
+          <div className="min-h-full w-[2px] bg-green-200"></div>
+        )}
+
+        {condition && flights.donenUcaklar?.length > 0 && (
+          <div className="space-y-6 w-1/2">
+            <div className="flex justify-between items-center">
+              <p className="text-3xl">
+                Uçuş Listesi - <b>Dönen Yolcu</b>
+              </p>
+              <select
+                onChange={(e) => dispatch(setCategory(e.target.value))}
+                className="p-2 outline-none">
+                <option>Filtreleme</option>
+                <option value={"price"}>En Düşük Fiyat</option>
+                <option value={"time"}>Uçuş Uzunluğu</option>
+              </select>
+            </div>
+            {flights.donenUcaklar.map((flight, index) => {
+              return (
+                <div
+                  className={` flex justify-between p-2 ${
+                    index !== flights.donenUcaklar.length - 1 &&
+                    "border-b-2 border-gray-200"
+                  }`}
+                  key={flight.ucus_numarasi}>
+                  <div className="flex flex-col gap-y-2">
+                    <p>Ucus numarasi: {flight.ucus_numarasi}</p>
+                    <div>{formatDate(flight.gidisTarihi)}</div>
+                    <p>{flight.havayolu}</p>
+                    <div className="flex gap-x-1">
+                      <p>{flight.nereden}</p>
+                      <span>
+                        <RightArrow size={24} />
+                      </span>
+                      <p>{flight.nereye}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-y-2">
+                    <div className="flex justify-center items-center gap-x-2">
+                      <p>{flight.kalkis_saati}</p>
+                      <PlaneIcon size={44} />
+                      <p>{flight.varis_saati}</p>
+                    </div>
+                    <div className="flex items-center gap-x-1">
+                      <span>
+                        <ClockIcon />
+                      </span>
+                      <p>{formatTime(flight.ucus_suresi)}</p>
+                    </div>
+                    <p>
+                      {flight.nereden_sehir} - {flight.nereye_sehir}{" "}
+                    </p>
+                  </div>
+
+                  <div className="text-xl font-semibold">{flight.fiyat} ₺</div>
+                  <div className="my-auto">
+                    <button
+                      onClick={(e) => e.preventDefault()}
+                      className="bg-app-green p-3 text-lg rounded-lg !text-white font-semibold">
+                      İncele
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </>
   );
 };

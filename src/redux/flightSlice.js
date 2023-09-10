@@ -15,8 +15,11 @@ const initialState = {
 
   category: "",
 
-  flights: [],
-  donusFlights: [],
+  flights: {
+    gidenUcaklar: [],
+    donenUcaklar: [],
+  },
+  
 };
 
 export const getAirports = createAsyncThunk("airports", async (airportName) => {
@@ -104,11 +107,11 @@ export const flightSlice = createSlice({
 
     sortByCategory: (state) => {
       if (state.category === "price") {
-        state.flights.sort((a, b) => {
+        state.flights.gidenUcaklar.sort((a, b) => {
           return a.fiyat - b.fiyat;
         });
       } else if (state.category === "time") {
-        state.flights.sort((a, b) => {
+        state.flights.gidenUcaklar.sort((a, b) => {
           let aTime =
             a.ucus_suresi.split("h")[0] * 60 +
             a.ucus_suresi.split("h")[1].split("m")[0] * 1;
@@ -118,7 +121,7 @@ export const flightSlice = createSlice({
           return aTime - bTime;
         });
       } else if (state.category === "airline") {
-        state.flights.sort((a, b) => {
+        state.flights.gidenUcaklar.sort((a, b) => {
           return a.havayolu.localeCompare(b.havayolu);
         });
       }
@@ -140,8 +143,10 @@ export const flightSlice = createSlice({
       })
 
       .addCase(getFlights.fulfilled, (state, action) => {
+        const{gidenUcaklar,donenUcaklar} = action.payload;
         state.status = "success";
-        state.flights = action.payload;
+        state.flights.gidenUcaklar = gidenUcaklar;
+        state.flights.donenUcaklar = donenUcaklar;
       });
   },
 });

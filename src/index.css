@@ -15,9 +15,18 @@
   background: white !important;
   color: black;
   outline: none;
+  border-radius: 0%;
+}
+
+body{
+  background-color: #F3F4F6;
+}
+
+input {
+  border: 0;
 }
 
 .datepicker div,button{
-  background-color: rgb(217, 217, 217);
+  background-color: rgb(255, 255, 255);
   color: black !important;
 }

@@ -1,9 +1,9 @@
-import {FaPlane} from 'react-icons/fa'
+import {CgAirplane} from 'react-icons/cg'
 
 const PlaneIcon = ({size}) => {
   return (
     <div>
-        <FaPlane/>
+        <CgAirplane/>
     </div>
   )
 }

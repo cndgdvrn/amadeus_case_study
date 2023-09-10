@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import { rest } from "msw";
 import { airports } from "../Data/airports";
 import { flights } from "../Data/flights";
@@ -34,10 +35,10 @@ const filteredFlights = (secilenNereden, secilenNereye, gidisTarihi,donusTarihi)
   })
 
     if(donusTarihi){
-      return [...gidenUcaklar,...donenUcaklar]
+      return {gidenUcaklar,donenUcaklar}
     }
     else{
-      return gidenUcaklar
+      return {gidenUcaklar}
     }
 
 };
@@ -66,13 +67,31 @@ export const handlers = [
     const gidisTarihi = req.url.searchParams.get("gidisTarihi");
     const donusTarihi = req.url.searchParams.get("donusTarihi");
 
-    const filteredData = filteredFlights(
-      secilenNereden,
-      secilenNereye,
-      gidisTarihi,
-      donusTarihi
-    );
+    if(!donusTarihi){
+      const {gidenUcaklar}= filteredFlights(
+        secilenNereden,
+        secilenNereye,
+        gidisTarihi,
+      );
+      return res(ctx.status(200), ctx.delay(3000),ctx.json({gidenUcaklar}));
+    }
 
-    return res(ctx.status(200), ctx.delay(3000), ctx.json(filteredData));
+    if(donusTarihi){
+      const {gidenUcaklar,donenUcaklar}= filteredFlights(
+        secilenNereden,
+        secilenNereye,
+        gidisTarihi,
+        donusTarihi
+      );
+      return res(ctx.status(200), ctx.delay(3000),ctx.json({gidenUcaklar,donenUcaklar}));
+
+    }
+
+
+    
+
+    
+
+    
   }),
 ];

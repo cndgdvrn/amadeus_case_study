@@ -83,8 +83,8 @@ const SearchForm = () => {
 
 
   return (
-    <div className="w-[648px] bg-gray-300 p-4 font-gemunu">
-      <p className="w-max border-b-2 border-b-gray-400 text-2xl mb-2 tracking-wider py-1">
+    <div className="w-full bg-gray-100 p-4 font-gemunu">
+      <p className="w-max border-b-2 border-b-gray-400 text-4xl mb-2 tracking-wider py-1">
         Uçak Bileti
       </p>
 
@@ -188,9 +188,9 @@ const SearchForm = () => {
           <div className="flex w-full flex-col justify-center gap-y-1">
             <div className="flex justify-between">
               <label className="font-light">Dönüş Tarihi</label>
-              <div className="flex gap-x-[2px]">
-                <input onChange={(e) => handleTekYon(e)} type="checkbox" />
-                <span className="font-light">Tek Yön</span>
+              <div className="flex items-center gap-x-[2px]">
+                <input className="w-5 h-5 border-none" onChange={(e) => handleTekYon(e)} type="checkbox" />
+                <span className="font-semibold text-lg">Tek Yön</span>
               </div>
             </div>
             <div className="datepicker">
