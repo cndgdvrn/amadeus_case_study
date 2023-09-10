@@ -85,7 +85,7 @@ const SearchForm = () => {
     <div className="w-full bg-gray-100 p-4 font-gemunu">
       <div className="flex justify-between">
         <p className="w-max border-b-2 border-b-gray-400 text-6xl mb-4 tracking-wider py-1">
-          Fly Search App
+          Flight Search App
         </p>
         <div className="font-mono font-[900]">
           <p>Örnek Uçuşlar</p>
