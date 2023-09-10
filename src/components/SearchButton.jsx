@@ -1,9 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
-import { getFlights, setCategory, setDonusCategory, sortByCategory, sortByDonusCategory } from "../redux/flightSlice";
+import {
+  getFlights,
+  setCategory,
+  setDonusCategory,
+  sortByCategory,
+  sortByDonusCategory,
+} from "../redux/flightSlice";
 import RightArrow from "./Icons/RightArrow";
 import { useEffect } from "react";
 import PlaneIcon from "./Icons/PlaneIcon";
 import ClockIcon from "./Icons/ClockIcon";
+import PlaneLoading from "./Icons/PlaneLoading";
 import { ColorRing } from "react-loader-spinner";
 import { formatDate } from "../helpers/formatDate";
 import { formatTime } from "../helpers/formatTime";
@@ -18,8 +26,12 @@ const SearchButton = ({ isTekYon }) => {
     donusTarihi,
     status,
     category,
-    donusCategory
+    donusCategory,
+    gidisYonuError,
+    donusYonuError
   } = useSelector((state) => state.flight);
+
+ 
 
   const handleBiletBul = (e) => {
     e.preventDefault();
@@ -41,11 +53,11 @@ const SearchButton = ({ isTekYon }) => {
     dispatch(sortByCategory(category));
   }, [category, dispatch]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(sortByDonusCategory(donusCategory));
-  },[donusCategory, dispatch])
+  }, [donusCategory, dispatch]);
 
-  console.log(flights);
+  console.log(status,"status");
 
   return (
     <>
@@ -53,13 +65,15 @@ const SearchButton = ({ isTekYon }) => {
         disabled={!condition || status == "loading"}
         onClick={(e) => handleBiletBul(e)}
         className={`mt-4 w-full bg-app-green rounded-md p-3 !text-white transition-all duration-500 text-lg ${
-          (!condition || status=="loading") ? "opacity-60 cursor-not-allowed" : "opacity-100 cursor-pointer"
+          !condition || status == "loading"
+            ? "opacity-60 cursor-not-allowed"
+            : "opacity-100 cursor-pointer"
         }
         }`}>
         {status == "loading" ? (
           <div className="flex justify-center items-center ">
             <span>Uçuş Aranıyor</span>
-            <ColorRing
+            {/* <ColorRing
               visible={true}
               height="28"
               width="28"
@@ -67,7 +81,7 @@ const SearchButton = ({ isTekYon }) => {
               wrapperStyle={{}}
               wrapperClass="blocks-wrapper"
               colors={["#fff", "#fff", "#fff", "#fff", "#fff", "#fff"]}
-            />
+            /> */}
           </div>
         ) : (
           "Bilet Ara"
@@ -75,6 +89,8 @@ const SearchButton = ({ isTekYon }) => {
       </button>
 
       <div className="flex gap-x-12 mt-8 h-full">
+
+        {/* Giden yolcu */}
         {condition && flights.gidenUcaklar.length > 0 && (
           <div className="space-y-6 w-1/2">
             <div className="flex justify-between items-center">
@@ -127,7 +143,9 @@ const SearchButton = ({ isTekYon }) => {
                     </p>
                   </div>
 
-                  <div className="text-xl font-semibold my-auto">{flight.fiyat} ₺</div>
+                  <div className="text-xl font-semibold my-auto">
+                    {flight.fiyat} ₺
+                  </div>
                   <div className="my-auto">
                     <button
                       onClick={(e) => e.preventDefault()}
@@ -141,10 +159,27 @@ const SearchButton = ({ isTekYon }) => {
           </div>
         )}
 
-        {condition && flights.donenUcaklar?.length > 0 && flights.gidenUcaklar.length > 0 &&  (
-          <div className="min-h-full w-[2px] bg-green-200"></div>
-        )}
+            {/* Giden yolcu boş data */}
+        {condition &&
+          !(flights.gidenUcaklar.length > 0) &&
+          status === "success" && (
+            <div className="w-1/2 space-y-2">
+              <p className="text-4xl">Uçuş Bulunamadı </p>
+              <p className="text-2xl">
+                Ne yazık ki aradığınız kriterlere uygun <span className="font-extrabold"> gidiş yönü</span> uçuşu
+                bulunamadı.
+              </p>
+            </div>
+          )}
 
+            {/* Vertical line */}
+        {condition &&
+          flights.donenUcaklar?.length > 0 &&
+          flights.gidenUcaklar.length > 0 && (
+            <div className="min-h-full w-[2px] bg-green-200"></div>
+          )}
+
+            {/* Dönen yolcu */}
         {condition && flights.donenUcaklar?.length > 0 && (
           <div className="space-y-6 w-1/2">
             <div className="flex justify-between items-center">
@@ -202,14 +237,30 @@ const SearchButton = ({ isTekYon }) => {
                     <button
                       onClick={(e) => e.preventDefault()}
                       className="bg-yellow-400 bg-opacity-75 p-3 text-lg tracking-wider rounded-lg !text-gray-100 font-semibold hover:bg-opacity-100 transition-all duration-300">
-
-                        
                       İncele
                     </button>
                   </div>
                 </div>
               );
             })}
+          </div>
+        )}
+
+            {/* Dönen yolcu boş data */}
+        
+        {condition && !(flights.donenUcaklar?.length > 0) && status ==="success" && !isTekYon && (
+          <div className="w-1/2 space-y-2">
+            <p className="text-4xl">Uçuş Bulunamadı </p>
+            <p className="text-2xl">
+              Ne yazık ki aradığınız kriterlere uygun <span className="font-extrabold"> dönüş yönü</span> uçuşu bulunamadı
+            </p>
+          </div>
+        )}
+
+
+        {status == "loading" && (
+          <div className="fixed top-0 left-0 w-full h-full bg-inherit flex justify-center items-center">
+            <PlaneLoading />
           </div>
         )}
       </div>

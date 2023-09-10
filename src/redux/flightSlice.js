@@ -20,7 +20,9 @@ const initialState = {
     gidenUcaklar: [],
     donenUcaklar: [],
   },
-  
+
+  gidisYonuError: "",
+  donusYonuError: "",
 };
 
 export const getAirports = createAsyncThunk("airports", async (airportName) => {
@@ -156,21 +158,21 @@ export const flightSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAirports.fulfilled, (state, action) => {
-        state.status = "success";
+        // state.status = "success";
         state.neredenAirports = action.payload;
       })
       .addCase(getNereyeAirports.fulfilled, (state, action) => {
-        state.status = "success";
+        // state.status = "success";
         state.nereyeAirports = action.payload;
       })
       .addCase(getFlights.pending, (state) => {
-        console.log("pending");
         state.status = "loading";
       })
 
       .addCase(getFlights.fulfilled, (state, action) => {
-        const{gidenUcaklar,donenUcaklar} = action.payload;
+        const { gidenUcaklar, donenUcaklar } = action.payload;
         state.status = "success";
+
         state.flights.gidenUcaklar = gidenUcaklar;
         state.flights.donenUcaklar = donenUcaklar;
       });

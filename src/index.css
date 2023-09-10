@@ -1,8 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap');
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --f-primary: 'Josefin Sans', sans-serif;
+  --f-secondary: 'Indie Flower', cursive;
+  --c-front: #FFFFFF;
+  --c-back: #1D1F20;
+  --c-back-light: #383838;
+  --c-hilight: #FFA500;
+  --s-footer-height: 3rem;
+}
+
+.boxShadow {
+  box-shadow: 0 0 10rem 0 #000000;
+}
+
+.boxShadow--in {
+  box-shadow: 0 0 10rem 0 #000000 inset;
+}
+
+
 
 
 * {
@@ -38,3 +59,42 @@ body{
 .datepicker div button{
   color: green !important;
 }
+
+
+
+.svg-calLoader {
+  width: 230px;
+  height: 230px;
+  transform-origin: 115px 115px;
+  animation: loader-spin 1.4s linear infinite;
+}
+
+.cal-loader__plane {
+  fill: var(--c-hilight);
+}
+
+.cal-loader__path {
+  stroke: var(--c-front);
+  animation: loader-path 1.4s ease-in-out infinite;
+}
+
+/* Keyframe animasyonları */
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-path {
+  0% {
+    stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+  }
+  50% {
+    stroke-dasharray: 0, 450, 10, 30, 10, 30, 10, 30, 10;
+  }
+  100% {
+    stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+  }
+}
+
+
