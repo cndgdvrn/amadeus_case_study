@@ -1,8 +1,9 @@
-# React + Vite
+# Flight Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project contains a web application that you can use to search for flight tickets. Here are the key features of the application:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Origin and Destination Selection:** Start your flight searches by selecting your desired airports.
+- **Date Selection:** Easily set departure and return dates.
+- **Flight Sorting:** Sort flights by price, duration, or airline.
+- **Fake Data:** Includes fake flight data that you can use for testing purposes.
+- **Live Demo on Vercel:** You can check out the application [HERE!!!!!!!!!!!](https://flight-search-hsz285r90-cndgdvrn.vercel.app).
