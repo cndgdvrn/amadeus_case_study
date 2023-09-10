@@ -220,4 +220,18 @@ export const flights = [
     havayolu: "Turk Hava Yolları",
     fiyat: "1000",
   },
+
+  {
+    ucus_numarasi: 814,
+    nereden: "IST",
+    nereden_sehir: "İstanbul",
+    nereye: "ESB",
+    nereye_sehir: "Ankara",
+    gidisTarihi: "2023-09-20",
+    kalkis_saati: "08:10",
+    varis_saati: "09:25",
+    ucus_suresi: "1h15m",
+    havayolu: "Turk Hava Yolları",
+    fiyat: "1000",
+  },
 ];
