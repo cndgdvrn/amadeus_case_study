@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getFlights, setCategory, sortByCategory } from "../redux/flightSlice";
+import { getFlights, setCategory, setDonusCategory, sortByCategory, sortByDonusCategory } from "../redux/flightSlice";
 import RightArrow from "./Icons/RightArrow";
 import { useEffect } from "react";
 import PlaneIcon from "./Icons/PlaneIcon";
@@ -18,6 +18,7 @@ const SearchButton = ({ isTekYon }) => {
     donusTarihi,
     status,
     category,
+    donusCategory
   } = useSelector((state) => state.flight);
 
   const handleBiletBul = (e) => {
@@ -40,6 +41,10 @@ const SearchButton = ({ isTekYon }) => {
     dispatch(sortByCategory(category));
   }, [category, dispatch]);
 
+  useEffect(()=>{
+    dispatch(sortByDonusCategory(donusCategory));
+  },[donusCategory, dispatch])
+
   console.log(flights);
 
   return (
@@ -48,7 +53,7 @@ const SearchButton = ({ isTekYon }) => {
         disabled={!condition || status == "loading"}
         onClick={(e) => handleBiletBul(e)}
         className={`mt-4 w-full bg-app-green rounded-md p-3 !text-white transition-all duration-500 text-lg ${
-          !condition && "opacity-75 cursor-not-allowed"
+          (!condition || status=="loading") ? "opacity-60 cursor-not-allowed" : "opacity-100 cursor-pointer"
         }
         }`}>
         {status == "loading" ? (
@@ -122,11 +127,11 @@ const SearchButton = ({ isTekYon }) => {
                     </p>
                   </div>
 
-                  <div className="text-xl font-semibold">{flight.fiyat} ₺</div>
+                  <div className="text-xl font-semibold my-auto">{flight.fiyat} ₺</div>
                   <div className="my-auto">
                     <button
                       onClick={(e) => e.preventDefault()}
-                      className="bg-app-green p-3 text-lg rounded-lg !text-white font-semibold">
+                      className="bg-yellow-400 bg-opacity-75 p-3 text-lg tracking-wider rounded-lg !text-gray-100 font-semibold hover:bg-opacity-100 transition-all duration-300">
                       İncele
                     </button>
                   </div>
@@ -147,11 +152,12 @@ const SearchButton = ({ isTekYon }) => {
                 Uçuş Listesi - <b>Dönen Yolcu</b>
               </p>
               <select
-                onChange={(e) => dispatch(setCategory(e.target.value))}
+                onChange={(e) => dispatch(setDonusCategory(e.target.value))}
                 className="p-2 outline-none">
                 <option>Filtreleme</option>
                 <option value={"price"}>En Düşük Fiyat</option>
                 <option value={"time"}>Uçuş Uzunluğu</option>
+                <option value={"airline"}>Hava Yolu</option>
               </select>
             </div>
             {flights.donenUcaklar.map((flight, index) => {
@@ -195,7 +201,9 @@ const SearchButton = ({ isTekYon }) => {
                   <div className="my-auto">
                     <button
                       onClick={(e) => e.preventDefault()}
-                      className="bg-app-green p-3 text-lg rounded-lg !text-white font-semibold">
+                      className="bg-yellow-400 bg-opacity-75 p-3 text-lg tracking-wider rounded-lg !text-gray-100 font-semibold hover:bg-opacity-100 transition-all duration-300">
+
+                        
                       İncele
                     </button>
                   </div>

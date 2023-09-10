@@ -84,8 +84,8 @@ const SearchForm = () => {
 
   return (
     <div className="w-full bg-gray-100 p-4 font-gemunu">
-      <p className="w-max border-b-2 border-b-gray-400 text-4xl mb-2 tracking-wider py-1">
-        Uçak Bileti
+      <p className="w-max border-b-2 border-b-gray-400 text-6xl mb-4 tracking-wider py-1">
+        Fly Search App
       </p>
 
       <form className="flex flex-col gap-y-2">
@@ -95,18 +95,18 @@ const SearchForm = () => {
             <label className="font-light">Nereden</label>
             <div className="relative">
               <input
-                value={secilenNereden?.name || nereden}
+                value={ secilenNereden ? secilenNereden?.city + ", " + secilenNereden?.name : nereden}
                 onChange={(e) => neredenChange(e)}
-                className=" w-full py-2 px-2 border-2 border-gray-300 rounded-md outline-none focus:border-app-green"
+                className=" w-full p-3  text-lg  rounded-md outline-none focus:outline-green-200"
                 type="text"
                 placeholder="Şehir veya Havalimanı Yazın"
               />
-              <div className="absolute top-[9.6px] right-1">
+              <div className="absolute top-[15.6px] right-2">
                 <TargetIcon size={24} />
               </div>
 
               {nereden.length >= 2 && showNeredenAirports && (
-                <div className="w-96 bg-gray-200 absolute top-12 z-10 shadow-2xl rounded-md">
+                <div className="w-[476px] bg-gray-200 absolute top-14 z-10 shadow-2xl rounded-md">
                   {neredenAirports.map((airport, i) => {
                     return (
                       <Airport
@@ -128,18 +128,18 @@ const SearchForm = () => {
             <label className="font-light">Nereye</label>
             <div className="relative">
               <input
-                value={secilenNereye?.name || nereye}
+                value={secilenNereye ? secilenNereye?.city + ", " + secilenNereye?.name : nereye}
                 onChange={(e) => nereyeChange(e)}
-                className=" w-full py-2 px-2 border-2 border-gray-300 rounded-md outline-none focus:border-app-green"
+                className=" w-full p-3  text-lg  rounded-md outline-none focus:outline-green-200"
                 type="text"
                 placeholder="Şehir veya Havalimanı Yazın"
               />
-              <div className="absolute top-[9.6px] right-1">
+              <div className="absolute top-[15.6px] right-1">
                 <LocationIcon size={24} />
               </div>
 
               {nereye.length >= 2 && showNereyeAirports && (
-                <div className="w-96 bg-gray-200 absolute top-12 z-10 shadow-2xl rounded-md">
+                <div className="w-[476px] bg-gray-200 absolute top-14 z-10 shadow-2xl rounded-md">
                   {nereyeAirports.map((airport, i) => {
                     return (
                       <NereyeAirport

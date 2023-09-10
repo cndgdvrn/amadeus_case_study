@@ -14,6 +14,7 @@ const initialState = {
   status: "",
 
   category: "",
+  donusCategory: "",
 
   flights: {
     gidenUcaklar: [],
@@ -126,6 +127,31 @@ export const flightSlice = createSlice({
         });
       }
     },
+
+    setDonusCategory: (state, action) => {
+      state.donusCategory = action.payload;
+    },
+    sortByDonusCategory: (state) => {
+      if (state.donusCategory === "price") {
+        state.flights.donenUcaklar.sort((a, b) => {
+          return a.fiyat - b.fiyat;
+        });
+      } else if (state.donusCategory === "time") {
+        state.flights.donenUcaklar.sort((a, b) => {
+          let aTime =
+            a.ucus_suresi.split("h")[0] * 60 +
+            a.ucus_suresi.split("h")[1].split("m")[0] * 1;
+          let bTime =
+            b.ucus_suresi.split("h")[0] * 60 +
+            b.ucus_suresi.split("h")[1].split("m")[0] * 1;
+          return aTime - bTime;
+        });
+      } else if (state.donusCategory === "airline") {
+        state.flights.donenUcaklar.sort((a, b) => {
+          return a.havayolu.localeCompare(b.havayolu);
+        });
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -163,6 +189,8 @@ export const {
   checkTime,
   setCategory,
   sortByCategory,
+  setDonusCategory,
+  sortByDonusCategory,
 } = flightSlice.actions;
 
 export default flightSlice.reducer;
